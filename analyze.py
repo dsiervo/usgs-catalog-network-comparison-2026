@@ -60,7 +60,9 @@ def main():
             row={**b,**d['phase'],'event_id':e['event_id'],'network':e['network'],'catalog_mag':e['mag']}
             manual.append(row)
         if a and b:pairs.append({'event_id':e['event_id'],'network':e['network'],'mag':b['mag'],**delta(a,b)})
-        raw=json.loads(gzip.decompress((CACHE/'details'/f"{e['event_id']}.json.gz").read_bytes()))
+        rawpath=CACHE/'normalized'/f"{e['event_id']}.json.gz"
+        if not rawpath.exists():rawpath=CACHE/'details'/f"{e['event_id']}.json.gz"
+        raw=json.loads(gzip.decompress(rawpath.read_bytes()))
         rs=[product_row(p)|{'event_id':e['event_id'],'preferred_network':e['network']} for p in raw['properties'].get('products',{}).get('origin',[]) if p.get('status')=='UPDATE']
         versions.extend(rs)
         if b:

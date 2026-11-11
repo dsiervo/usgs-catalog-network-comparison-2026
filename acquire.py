@@ -3,7 +3,7 @@
 No unit tests or checksum verification. Resume uses existing valid JSON/XML files.
 """
 import argparse, concurrent.futures as cf, datetime as dt, gzip, json, math
-import threading, time, urllib.request, urllib.parse, xml.etree.ElementTree as ET
+import threading, time, urllib.request, urllib.parse, urllib.error, xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -13,21 +13,39 @@ START = '2026-08-11T00:00:00'
 END = '2026-11-11T00:00:00'
 BASE = 'https://earthquake.usgs.gov/fdsnws/event/1/'
 KM_DEG = math.pi * 6371.0088 / 180
+RATE_LOCK=threading.Lock()
+NEXT_REQUEST={}
+
+def pace(url):
+    # FDSN explicitly limits requests to 500 per five minutes. Bulk archive
+    # requests are also paced, independently from static product downloads.
+    key='fdsn' if '/fdsnws/' in url else 'bulk' if 'products_created_after' in url else 'static'
+    interval={'fdsn':.8,'bulk':1.0,'static':.1}[key]
+    with RATE_LOCK:
+        now=time.monotonic(); wait=max(0,NEXT_REQUEST.get(key,0)-now)
+        NEXT_REQUEST[key]=now+wait+interval
+    if wait:time.sleep(wait)
 
 def get(url, path):
     if path.exists():
         return gzip.decompress(path.read_bytes())
     for attempt in range(6):
         try:
+            pace(url)
             req = urllib.request.Request(url, headers={'User-Agent': 'ComCatNetworkResearch/1.0 (public reproducible catalog study)'})
             with urllib.request.urlopen(req, timeout=90) as r:
                 body = r.read()
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(gzip.compress(body))
             return body
-        except Exception:
+        except Exception as ex:
             if attempt == 5: raise
-            time.sleep(min(2 ** attempt, 20))
+            if isinstance(ex,urllib.error.HTTPError) and ex.code==429:
+                with RATE_LOCK:
+                    NEXT_REQUEST['fdsn']=max(NEXT_REQUEST.get('fdsn',0),time.monotonic()+310)
+                print('Rate limit: pausing event API for at least five minutes',flush=True)
+                time.sleep(55)
+            else:time.sleep(min(2 ** attempt, 20))
 
 def jget(url, path): return json.loads(get(url, path))
 def savej(path, obj):
@@ -146,7 +164,8 @@ def process_event(e, phases=True):
     out=CACHE/'extracted'/f'{eid}.json.gz'
     if out.exists(): return json.loads(gzip.decompress(out.read_bytes()))
     url=BASE+'query?'+urllib.parse.urlencode({'eventid':eid,'format':'geojson','includesuperseded':'true'})
-    d=jget(url,CACHE/'details'/f'{eid}.json.gz')
+    normalized=CACHE/'normalized'/f'{eid}.json.gz'
+    d=json.loads(gzip.decompress(normalized.read_bytes())) if normalized.exists() else jget(url,CACHE/'details'/f'{eid}.json.gz')
     products=d['properties'].get('products',{})
     origins=[p for p in products.get('origin',[]) if p.get('status')=='UPDATE']
     rows=[product_row(p) for p in origins]
@@ -164,6 +183,7 @@ def process_event(e, phases=True):
     result={'event_id':eid,'network':net,'history_status':'ok','origin_versions':len(own),
        'ever_automatic':bool(automatic),'ever_reviewed':bool(reviewed),'contributions':contrib,'reviewed':final,'automatic':None,
        'phase':{'phase_status':'no_reviewed_origin'}, 'history_url':url}
+    result['history_transport']=d.get('research_provenance',{}).get('transport','FDSN event detail')
     if final:
         eligible=[r for r in automatic if r['update_ms']<final['update_ms'] and r['code']==final['code']]
         result['automatic']=min(eligible,key=lambda r:r['update_ms']) if eligible else None
