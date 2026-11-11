@@ -1,0 +1,2154 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Product Hub API",
+    "description": "API to send products and get information about products",
+    "version": "TBD"
+  },
+  "paths": {
+    "/pdl/products/notifications/status": {
+      "get": {
+        "summary": "Get Notifications Status",
+        "operationId": "get_notifications_status_pdl_products_notifications_status_get",
+        "parameters": [
+          {
+            "name": "broadcastbefore",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request notifications broadcast (sent/created) before the given timestamp, defaulted to create a 15 minute window or time of request",
+              "title": "Broadcastbefore"
+            },
+            "description": "Request notifications broadcast (sent/created) before the given timestamp, defaulted to create a 15 minute window or time of request"
+          },
+          {
+            "name": "broadcastafter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds.",
+              "title": "Broadcastafter"
+            },
+            "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          {
+            "name": "codes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product codes as comma delimited list",
+              "default": [],
+              "title": "Codes"
+            },
+            "description": "Request specific product codes as comma delimited list"
+          },
+          {
+            "name": "sources",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product sources as comma delimited list",
+              "default": [],
+              "title": "Sources"
+            },
+            "description": "Request specific product sources as comma delimited list"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product types as comma delimited list",
+              "default": [],
+              "title": "Types"
+            },
+            "description": "Request specific product types as comma delimited list"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotificationsStatusResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pdl/products/status": {
+      "get": {
+        "summary": "Get Products Status",
+        "operationId": "get_products_status_pdl_products_status_get",
+        "parameters": [
+          {
+            "name": "updatedbefore",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request products updated before the given timestamp, defaulted to create a 15 minute window or time of request",
+              "title": "Updatedbefore"
+            },
+            "description": "Request products updated before the given timestamp, defaulted to create a 15 minute window or time of request"
+          },
+          {
+            "name": "updatedafter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds.",
+              "title": "Updatedafter"
+            },
+            "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          {
+            "name": "codes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product codes as comma delimited list",
+              "default": [],
+              "title": "Codes"
+            },
+            "description": "Request specific product codes as comma delimited list"
+          },
+          {
+            "name": "sources",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product sources as comma delimited list",
+              "default": [],
+              "title": "Sources"
+            },
+            "description": "Request specific product sources as comma delimited list"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product types as comma delimited list",
+              "default": [],
+              "title": "Types"
+            },
+            "description": "Request specific product types as comma delimited list"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductsStatusResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pdl/products/{urn}/contents": {
+      "get": {
+        "summary": "Get Contents Available",
+        "description": "Product API endpoint for getting a dictionary of content\nfor a product matching the urn",
+        "operationId": "get_contents_available_pdl_products__urn__contents_get",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "urn:usgs-product:([a-zA-Z0-9]*[\\w.-]+?):([a-zA-Z0-9-]+?):([a-zA-Z0-9-_]+?)(?:$|:(\\d{13}))?$",
+              "title": "Product URN",
+              "description": "Full or partial URN for a product"
+            },
+            "description": "Full or partial URN for a product",
+            "examples": {
+              "Full urn example": {
+                "summary": "Full urn",
+                "description": "A urn containing all required fields",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>:<UPDATE_TIME(ms)>"
+              },
+              "Partial urn example": {
+                "summary": "Partial urn",
+                "description": "A urn without an updateTime",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetContentsResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentNotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pdl/products/{urn}/contents/{path}": {
+      "get": {
+        "summary": "Get File Content",
+        "description": "Product API endpoint for getting a the content of a file\nfor the a product matching the urn",
+        "operationId": "get_file_content_pdl_products__urn__contents__path__get",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "urn:usgs-product:([a-zA-Z0-9]*[\\w.-]+?):([a-zA-Z0-9-]+?):([a-zA-Z0-9-_]+?)(?:$|:(\\d{13}))?$",
+              "title": "Product URN",
+              "description": "Full or partial URN for a product"
+            },
+            "description": "Full or partial URN for a product",
+            "examples": {
+              "Full urn example": {
+                "summary": "Full urn",
+                "description": "A urn containing all required fields",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>:<UPDATE_TIME(ms)>"
+              },
+              "Partial urn example": {
+                "summary": "Partial urn",
+                "description": "A urn without an updateTime",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>"
+              }
+            }
+          },
+          {
+            "name": "path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Product File Path",
+              "description": "Full path to a product's file"
+            },
+            "description": "Full path to a product's file",
+            "examples": {
+              "Simple path": {
+                "summary": "Example of path to file",
+                "description": "Most products simply provide the file rather than a file in a sub-directories",
+                "value": "quakeml.xml"
+              },
+              "Path with directory": {
+                "summary": "Example of path to file in a directory",
+                "description": "Some products (e.g. ShakeMap) include files in sub-directories",
+                "value": "download/grid.xml"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentNotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pdl/products/notifications/{notification_id}": {
+      "get": {
+        "summary": "Get Notification",
+        "operationId": "get_notification_pdl_products_notifications__notification_id__get",
+        "parameters": [
+          {
+            "name": "notification_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Notification ID",
+              "description": "The ID of the notification as assigned during indexing"
+            },
+            "description": "The ID of the notification as assigned during indexing"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotificationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentNotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pdl/products/notifications": {
+      "get": {
+        "summary": "Get Notifications",
+        "operationId": "get_notifications_pdl_products_notifications_get",
+        "parameters": [
+          {
+            "name": "broadcastafter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds.",
+              "title": "Broadcastafter"
+            },
+            "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          {
+            "name": "includedeleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "only",
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter",
+              "title": "Includedeleted"
+            },
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          {
+            "name": "includesuperseded",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter",
+              "title": "Includesuperseded"
+            },
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          },
+          {
+            "name": "codes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product codes as comma delimited list",
+              "default": [],
+              "title": "Codes"
+            },
+            "description": "Request specific product codes as comma delimited list"
+          },
+          {
+            "name": "sources",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product sources as comma delimited list",
+              "default": [],
+              "title": "Sources"
+            },
+            "description": "Request specific product sources as comma delimited list"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product types as comma delimited list",
+              "default": [],
+              "title": "Types"
+            },
+            "description": "Request specific product types as comma delimited list"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "exclusiveMaximum": 101,
+              "exclusiveMinimum": 1,
+              "description": "Number of products to retrieve",
+              "default": 25,
+              "title": "Limit"
+            },
+            "description": "Number of products to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotificationsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pdl/products/{urn}": {
+      "get": {
+        "summary": "Get Product",
+        "operationId": "get_product_pdl_products__urn__get",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "urn:usgs-product:([a-zA-Z0-9]*[\\w.-]+?):([a-zA-Z0-9-]+?):([a-zA-Z0-9-_]+?)(?:$|:(\\d{13}))?$",
+              "title": "Product URN",
+              "description": "Full or partial URN for a product"
+            },
+            "description": "Full or partial URN for a product",
+            "examples": {
+              "Full urn example": {
+                "summary": "Full urn",
+                "description": "A urn containing all required fields",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>:<UPDATE_TIME(ms)>"
+              },
+              "Partial urn example": {
+                "summary": "Partial urn",
+                "description": "A urn without an updateTime",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>"
+              }
+            }
+          },
+          {
+            "name": "includedeleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "only",
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter",
+              "title": "Includedeleted"
+            },
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          {
+            "name": "includesuperseded",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter",
+              "title": "Includesuperseded"
+            },
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentNotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Send",
+        "operationId": "send_pdl_products__urn__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pdl/products": {
+      "get": {
+        "summary": "Get Products",
+        "operationId": "get_products_pdl_products_get",
+        "parameters": [
+          {
+            "name": "updatedafter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds.",
+              "title": "Updatedafter"
+            },
+            "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          {
+            "name": "includedeleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "only",
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter",
+              "title": "Includedeleted"
+            },
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          {
+            "name": "includesuperseded",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter",
+              "title": "Includesuperseded"
+            },
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          },
+          {
+            "name": "codes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product codes as comma delimited list",
+              "default": [],
+              "title": "Codes"
+            },
+            "description": "Request specific product codes as comma delimited list"
+          },
+          {
+            "name": "sources",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product sources as comma delimited list",
+              "default": [],
+              "title": "Sources"
+            },
+            "description": "Request specific product sources as comma delimited list"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Request specific product types as comma delimited list",
+              "default": [],
+              "title": "Types"
+            },
+            "description": "Request specific product types as comma delimited list"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "exclusiveMaximum": 101,
+              "exclusiveMinimum": 1,
+              "description": "Number of products to retrieve",
+              "default": 25,
+              "title": "Limit"
+            },
+            "description": "Number of products to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pdl/products/{urn}/uploads": {
+      "post": {
+        "summary": "Uploads",
+        "operationId": "uploads_pdl_products__urn__uploads_post",
+        "parameters": [
+          {
+            "name": "urn",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "urn:usgs-product:([a-zA-Z0-9]*[\\w.-]+?):([a-zA-Z0-9-]+?):([a-zA-Z0-9-_]+?)(?:$|:(\\d{13}))?$",
+              "title": "Product URN",
+              "description": "Full or partial URN for a product"
+            },
+            "description": "Full or partial URN for a product",
+            "examples": {
+              "Full urn example": {
+                "summary": "Full urn",
+                "description": "A urn containing all required fields",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>:<UPDATE_TIME(ms)>"
+              },
+              "Partial urn example": {
+                "summary": "Partial urn",
+                "description": "A urn without an updateTime",
+                "value": "urn:usgs-product:<SOURCE>:<TYPE>:<CODE>"
+              }
+            }
+          },
+          {
+            "name": "productLockTimeMillis",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 300000,
+              "minimum": 1,
+              "description": "Time to lock product before submitting",
+              "default": 30000,
+              "title": "Productlocktimemillis"
+            },
+            "description": "Time to lock product before submitting"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Content": {
+        "properties": {
+          "length": {
+            "type": "integer",
+            "title": "Length",
+            "description": "Data length in bytes."
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Modified",
+            "description": "When content was created, with millisecond precision. Defaults to now."
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sha256",
+            "description": "Base64 encoded sha256 hash of content bytes."
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "Content mime type. Defaults to 'text/plain'",
+            "default": "text/plain"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL where content can be accessed. Empty path content is encoded using a data url."
+          }
+        },
+        "type": "object",
+        "required": [
+          "length"
+        ],
+        "title": "Content",
+        "description": "Data attached to a product.\n\nSee Also\n--------\nConvenience factory methods for creating Content objects:\n  Content.from_bytes()\n  Content.from_file()\n  Content.from_directory()"
+      },
+      "ContentNotFoundErrorResponse": {
+        "properties": {
+          "errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "title": "ContentNotFoundErrorResponse"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "title": "ErrorResponse"
+      },
+      "FullProductId": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code",
+            "description": "Unique identifier within `source`+`type` namespace."
+          },
+          "source": {
+            "type": "string",
+            "title": "Source",
+            "description": "Source of product."
+          },
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "description": "Type of product."
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatetime",
+            "description": "Time when product was created, with millisecond precision."
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "source",
+          "type",
+          "updateTime"
+        ],
+        "title": "FullProductId"
+      },
+      "GetContentsResponseModel": {
+        "properties": {
+          "path": {
+            "$ref": "#/components/schemas/Content"
+          }
+        },
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "title": "GetContentsResponseModel"
+      },
+      "GetNotificationResponse": {
+        "properties": {
+          "notification": {
+            "$ref": "#/components/schemas/Notification"
+          }
+        },
+        "type": "object",
+        "required": [
+          "notification"
+        ],
+        "title": "GetNotificationResponse",
+        "description": "Requested notification of product."
+      },
+      "GetNotificationsRequest": {
+        "properties": {
+          "broadcastafter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Broadcastafter",
+            "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          "includedeleted": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "only"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includedeleted",
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          "includesuperseded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includesuperseded",
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          },
+          "codes": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Codes",
+            "description": "Request specific product codes as comma delimited list",
+            "default": []
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sources",
+            "description": "Request specific product sources as comma delimited list",
+            "default": []
+          },
+          "types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Types",
+            "description": "Request specific product types as comma delimited list",
+            "default": []
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMaximum": 101.0,
+            "exclusiveMinimum": 1.0,
+            "title": "Limit",
+            "description": "Number of products to retrieve",
+            "default": 25
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GetNotificationsRequest",
+        "description": "REST request for getting multiple notifications"
+      },
+      "GetNotificationsResponse": {
+        "properties": {
+          "notifications": {
+            "items": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "type": "array",
+            "title": "Notifications"
+          },
+          "request": {
+            "$ref": "#/components/schemas/GetNotificationsRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "notifications",
+          "request"
+        ],
+        "title": "GetNotificationsResponse",
+        "description": "REST response to notifications created after"
+      },
+      "GetNotificationsStatusRequest": {
+        "properties": {
+          "broadcastbefore": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Broadcastbefore",
+            "description": "Request notifications broadcast (sent/created) before the given timestamp, defaulted to create a 15 minute window or time of request"
+          },
+          "broadcastafter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Broadcastafter",
+            "description": "Request notifications broadcast (sent/created) after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          "codes": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Codes",
+            "description": "Request specific product codes as comma delimited list",
+            "default": []
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sources",
+            "description": "Request specific product sources as comma delimited list",
+            "default": []
+          },
+          "types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Types",
+            "description": "Request specific product types as comma delimited list",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GetNotificationsStatusRequest",
+        "description": "REST request for getting the status of notifications"
+      },
+      "GetNotificationsStatusResponse": {
+        "properties": {
+          "lastProduct": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastproduct"
+          },
+          "totalProducts": {
+            "type": "integer",
+            "title": "Totalproducts"
+          },
+          "request": {
+            "$ref": "#/components/schemas/GetNotificationsStatusRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lastProduct",
+          "totalProducts",
+          "request"
+        ],
+        "title": "GetNotificationsStatusResponse",
+        "description": "Requested status for notifications."
+      },
+      "GetProductRequest": {
+        "properties": {
+          "includedeleted": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "only"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includedeleted",
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          "includesuperseded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includesuperseded",
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GetProductRequest",
+        "description": "REST request for getting a single product"
+      },
+      "GetProductResponse": {
+        "properties": {
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "request": {
+            "$ref": "#/components/schemas/GetProductRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "created",
+          "product",
+          "request"
+        ],
+        "title": "GetProductResponse",
+        "description": "Requested product."
+      },
+      "GetProductsRequest": {
+        "properties": {
+          "updatedafter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updatedafter",
+            "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          "includedeleted": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "only"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includedeleted",
+            "description": "Include deleted products, this value is mutually exclusive with the includesuperseded parameter"
+          },
+          "includesuperseded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includesuperseded",
+            "description": "Include superseded products, this value is mutually exclusive with the includedeleted parameter"
+          },
+          "codes": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Codes",
+            "description": "Request specific product codes as comma delimited list",
+            "default": []
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sources",
+            "description": "Request specific product sources as comma delimited list",
+            "default": []
+          },
+          "types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Types",
+            "description": "Request specific product types as comma delimited list",
+            "default": []
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMaximum": 101.0,
+            "exclusiveMinimum": 1.0,
+            "title": "Limit",
+            "description": "Number of products to retrieve",
+            "default": 25
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GetProductsRequest",
+        "description": "REST request for getting multiple products"
+      },
+      "GetProductsResponse": {
+        "properties": {
+          "products": {
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "type": "array",
+            "title": "Products"
+          },
+          "request": {
+            "$ref": "#/components/schemas/GetProductsRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "products",
+          "request"
+        ],
+        "title": "GetProductsResponse",
+        "description": "REST response to products created after"
+      },
+      "GetProductsStatusRequest": {
+        "properties": {
+          "updatedbefore": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updatedbefore",
+            "description": "Request products updated before the given timestamp, defaulted to create a 15 minute window or time of request"
+          },
+          "updatedafter": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updatedafter",
+            "description": "Request products updated after the given timestamp, defaulted to create a 15 minute window. Accepts ISO8601 format or Unix timestamp in milliseconds."
+          },
+          "codes": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Codes",
+            "description": "Request specific product codes as comma delimited list",
+            "default": []
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sources",
+            "description": "Request specific product sources as comma delimited list",
+            "default": []
+          },
+          "types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Types",
+            "description": "Request specific product types as comma delimited list",
+            "default": []
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "GetProductsStatusRequest",
+        "description": "REST request for getting the status of products"
+      },
+      "GetProductsStatusResponse": {
+        "properties": {
+          "lastProduct": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastproduct"
+          },
+          "totalProducts": {
+            "type": "integer",
+            "title": "Totalproducts"
+          },
+          "request": {
+            "$ref": "#/components/schemas/GetProductsStatusRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lastProduct",
+          "totalProducts",
+          "request"
+        ],
+        "title": "GetProductsStatusResponse",
+        "description": "Requested status for products."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Link": {
+        "properties": {
+          "relation": {
+            "type": "string",
+            "title": "Relation",
+            "description": "How the uri is related. A product may have multiple uris with the same relation."
+          },
+          "uris": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Uris",
+            "description": "list of Uniform Resource Identifiers that are related to a product. This may include URLs that are directly accessible, or other URIS like a DOI or Product URN."
+          }
+        },
+        "type": "object",
+        "required": [
+          "relation",
+          "uris"
+        ],
+        "title": "Link",
+        "description": "Link is a uri related to a product."
+      },
+      "Notification": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "Database id of the notification"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created",
+            "description": "When product was created"
+          },
+          "expiresTime": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expirestime",
+            "description": "When product is archived"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product",
+            "description": "The product that was sent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "created",
+          "product"
+        ],
+        "title": "Notification",
+        "description": "Notification is a message that a product was sent."
+      },
+      "Product": {
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/FullProductId",
+            "description": "Unique identifier for this product."
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "type": "array",
+            "title": "Links",
+            "description": "Links to other products and resources."
+          },
+          "properties": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Properties",
+            "description": "Key/value pairs. Defaults to empty dict."
+          },
+          "signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signature",
+            "description": "Digital signature based on contents and metadata. Deprecated use signatureHistory instead.",
+            "deprecated": true
+          },
+          "signatureVersion": {
+            "type": "string",
+            "title": "Signatureversion",
+            "description": "Signature algorithm version. Deprecated use signatureHistory instead.",
+            "default": "v2",
+            "deprecated": true
+          },
+          "signatureHistory": {
+            "items": {
+              "$ref": "#/components/schemas/ProductSignature"
+            },
+            "type": "array",
+            "title": "Signaturehistory",
+            "description": "Signature history"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Product status. The only reserved status is `DELETE`, which indicates the product is deleted.",
+            "default": "UPDATE"
+          },
+          "contents": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Content"
+            },
+            "type": "object",
+            "title": "Contents",
+            "description": "Data attached to the product. Defaults to empty dict.",
+            "examples": [
+              {
+                "": {
+                  "length": "number",
+                  "modified": "date-time",
+                  "sha256": "Base64 encoded sha256 hash of content bytes.",
+                  "type": "text/plain",
+                  "url": "data:text/plain;base64,{inline content bytes}"
+                },
+                "file_name.extension": {
+                  "length": "number",
+                  "modified": "date-time",
+                  "sha256": "Base64 encoded sha256 hash of content bytes.",
+                  "type": "application/file-type",
+                  "url": "URL where content can be accessed."
+                }
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "Product",
+        "description": "Product is a specific version of content(s) with metadata."
+      },
+      "ProductSignature": {
+        "properties": {
+          "signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signature",
+            "description": "Digital signature based on contents and metadata"
+          },
+          "signatureVersion": {
+            "type": "string",
+            "title": "Signatureversion",
+            "description": "Signature algorithm version",
+            "default": "v2"
+          }
+        },
+        "type": "object",
+        "title": "ProductSignature"
+      },
+      "SendProductResponse": {
+        "properties": {
+          "notification": {
+            "$ref": "#/components/schemas/Notification"
+          },
+          "notification_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notification Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "notification"
+        ],
+        "title": "SendProductResponse",
+        "description": "Product that was sent."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ValidationErrorResponse": {
+        "properties": {
+          "errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "errors"
+        ],
+        "title": "ValidationErrorResponse"
+      }
+    }
+  }
+}

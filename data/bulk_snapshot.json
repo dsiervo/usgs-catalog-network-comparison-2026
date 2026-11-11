@@ -1,0 +1,6 @@
+{
+  "start_created_after_utc": "2026-08-10T00:00:00Z",
+  "end_created_before_utc": "2026-11-11T23:20:49.542908+00:00",
+  "endpoint": "https://earthquake.usgs.gov/pdl/west/products_created_after",
+  "batch_limit": 1000
+}
