@@ -1,5 +1,11 @@
 # Methods and interpretation
 
+## U.S. authoritative network scope
+
+Following the user's clarification, the main comparison uses only the 12 network codes in the official USGS GeoServe ANSS authoritative-region layer: AK, CI, HV, NC, NM, NN, OK, PR, SE, TX, UU and UW. The layer, retrieved November 13, 2026, contains 13 polygons because UU has two regions. Worldwide NEIC reporting (US), AVO (AV) and Montana (MB) are excluded from the main comparison. AV and MB are absent from this authoritative layer. Puerto Rico remains included as a U.S. regional network.
+
+This compares the eligible networks' preferred ComCat events, including offshore and border events in their reporting areas. It is not a U.S. land-boundary clip. Authority polygons determine network eligibility rather than reassigning authority for each earthquake. The broader raw acquisition remains available as provenance. Source: https://earthquake.usgs.gov/ws/geoserve/layers.php and data/anss_authoritative_regions.json.
+
 ## Cohort and network attribution
 
 The study includes every ComCat record classified as an earthquake with preferred origin time in the half-open interval 2026-08-11 to 2026-11-11 UTC, worldwide, without a magnitude threshold. This is the preceding three calendar months relative to November 11, using complete UTC days. Weekly queries avoid the 20,000-result API ceiling. Boundary duplicates are removed by ComCat event ID. Query metadata and retrieval time are preserved. Records deleted before cohort retrieval are outside the cohort, so automatic false-positive/deletion rates cannot be estimated.

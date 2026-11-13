@@ -1,5 +1,7 @@
 # USGS ComCat network comparison
 
+**Final comparison scope:** U.S. ANSS authoritative regional networks AK, CI, HV, NC, NM, NN, OK, PR, SE, TX, UU and UW, using the official USGS authoritative-region roster. Worldwide NEIC events and AV/MB contributors are excluded from the main results. The worldwide acquisition below is the source pool, not the comparison cohort.
+
 Reproducible study of earthquakes with preferred origin times in **2026-08-11 00:00:00 UTC through 2026-11-11 00:00:00 UTC (exclusive)**. All magnitudes, worldwide, event type earthquake. Data retrieved beginning November 11, 2026.
 
 ## Research questions
