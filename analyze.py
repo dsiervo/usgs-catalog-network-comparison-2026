@@ -79,7 +79,7 @@ def main():
         if i%5000==0:print('Derived',i,'events',flush=True)
     hist=pd.DataFrame(available);hist.to_csv(OUT/'event_history_and_phase_coverage.csv.gz',index=False)
     c=cat.merge(hist[['event_id','history_status','origin_versions','ever_automatic','ever_reviewed','phase_status']],on='event_id',how='left')
-    c['mag_bin']=magbin(c['mag']);c['week']=pd.to_datetime(c.origin_time,utc=True).dt.to_period('W-SUN').astype(str).str[:10]
+    c['mag_bin']=magbin(c['mag']);c['week']=pd.to_datetime(c.origin_time,utc=True,format='ISO8601').dt.to_period('W-SUN').astype(str).str[:10]
     write(c,'cohort_with_coverage.csv')
     contrib=pd.DataFrame(contributions);write(contrib,'network_contributions.csv')
     v=pd.DataFrame(versions);v.to_csv(OUT/'origin_versions.csv.gz',index=False)
@@ -145,3 +145,4 @@ def main():
     print(json.dumps(audit,indent=2),flush=True)
 
 if __name__=='__main__':main()
+
