@@ -1,5 +1,5 @@
 """Derive event tables, descriptive summaries and publication figure inputs."""
-import gzip,json,math,platform,sys
+import gzip,json,math,platform,sys,concurrent.futures as cf
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -50,19 +50,22 @@ def summary_long(frame,groups,metrics):
 
 def main():
     cat=pd.read_csv(DATA/'catalog.csv'); available=[];contributions=[];manual=[];pairs=[];lastpairs=[];versions=[];cross=[]
-    for i,e in enumerate(cat.to_dict('records')):
+    def load_event(e):
         path=CACHE/'extracted'/f"{e['event_id']}.json.gz"
-        if not path.exists():continue
-        d=json.loads(gzip.decompress(path.read_bytes()));b=d['reviewed'];a=d['automatic']
+        if not path.exists():return e,None,None
+        rawpath=CACHE/'normalized'/f"{e['event_id']}.json.gz"
+        if not rawpath.exists():rawpath=CACHE/'details'/f"{e['event_id']}.json.gz"
+        return e,json.loads(gzip.decompress(path.read_bytes())),json.loads(gzip.decompress(rawpath.read_bytes()))
+    pool=cf.ThreadPoolExecutor(max_workers=24)
+    for i,(e,d,raw) in enumerate(pool.map(load_event,cat.to_dict('records'),buffersize=96)):
+        if d is None:continue
+        b=d['reviewed'];a=d['automatic']
         available.append({k:d.get(k) for k in ['event_id','network','history_status','origin_versions','ever_automatic','ever_reviewed']}|d['phase'])
         contributions.extend(d['contributions'])
         if b:
             row={**b,**d['phase'],'event_id':e['event_id'],'network':e['network'],'catalog_mag':e['mag']}
             manual.append(row)
         if a and b:pairs.append({'event_id':e['event_id'],'network':e['network'],'mag':b['mag'],**delta(a,b)})
-        rawpath=CACHE/'normalized'/f"{e['event_id']}.json.gz"
-        if not rawpath.exists():rawpath=CACHE/'details'/f"{e['event_id']}.json.gz"
-        raw=json.loads(gzip.decompress(rawpath.read_bytes()))
         rs=[product_row(p)|{'event_id':e['event_id'],'preferred_network':e['network']} for p in raw['properties'].get('products',{}).get('origin',[]) if p.get('status')=='UPDATE']
         versions.extend(rs)
         if b:
