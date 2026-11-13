@@ -1,0 +1,27 @@
+{
+  "catalog_events": 33468,
+  "unique_event_ids": 33468,
+  "history_downloads": 33468,
+  "missing_history": 0,
+  "reviewed_events": 29554,
+  "phase_status_counts": {
+    "ok": 29549,
+    "no_reviewed_origin": 3914,
+    "no_matching_reviewed_phase_product": 5
+  },
+  "origin_versions": 69448,
+  "contributing_networks": 18,
+  "automatic_reviewed_pairs": 9754,
+  "same_type_magnitude_pairs": 9262,
+  "cross_network_reviewed_comparisons": 2803,
+  "unresolved_pick_references": 0,
+  "reported_zero_S_events": 2012,
+  "phase_distance_unknown_P": 0,
+  "phase_distance_unknown_S": 0,
+  "runtime": {
+    "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "pandas": "3.1.1",
+    "numpy": "2.5.4"
+  }
+}
