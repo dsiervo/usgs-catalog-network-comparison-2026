@@ -67,6 +67,7 @@ def main():
     for ax,net in zip(axs.flat,nets):
         d=c[c.network.eq(net)];ax.hist(d.mag.dropna(),bins=bins,color=colors[net],edgecolor='white',lw=.25)
         ax.set_title(f'{net.upper()}  n={len(d):,}',loc='left',fontsize=10);ax.set_xlim(-2,8);ax.grid(axis='y',alpha=.15)
+    for ax in list(axs.flat)[len(nets):]:ax.set_visible(False)
     for ax in axs[-1]:ax.set_xlabel('Magnitude')
     for ax in axs[:,0]:ax.set_ylabel('Events')
     finish(fig,'02_magnitude_distributions','Magnitude distributions differ strongly among network catalogs',

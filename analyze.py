@@ -50,6 +50,9 @@ def summary_long(frame,groups,metrics):
 
 def main():
     cat=pd.read_csv(DATA/'catalog.csv'); available=[];contributions=[];manual=[];pairs=[];lastpairs=[];versions=[];cross=[]
+    roster=json.loads((DATA/'anss_authoritative_regions.json').read_text())
+    authoritative={f['properties']['network'].lower() for f in roster['anss']['features']}
+    cat=cat[cat.network.isin(authoritative)].copy()
     def load_event(e):
         path=CACHE/'extracted'/f"{e['event_id']}.json.gz"
         if not path.exists():return e,None,None
@@ -61,12 +64,12 @@ def main():
         if d is None:continue
         b=d['reviewed'];a=d['automatic']
         available.append({k:d.get(k) for k in ['event_id','network','history_status','origin_versions','ever_automatic','ever_reviewed']}|d['phase'])
-        contributions.extend(d['contributions'])
+        contributions.extend(x for x in d['contributions'] if x['network'] in authoritative)
         if b:
             row={**b,**d['phase'],'event_id':e['event_id'],'network':e['network'],'catalog_mag':e['mag']}
             manual.append(row)
         if a and b:pairs.append({'event_id':e['event_id'],'network':e['network'],'mag':b['mag'],**delta(a,b)})
-        rs=[product_row(p)|{'event_id':e['event_id'],'preferred_network':e['network']} for p in raw['properties'].get('products',{}).get('origin',[]) if p.get('status')=='UPDATE']
+        rs=[product_row(p)|{'event_id':e['event_id'],'preferred_network':e['network']} for p in raw['properties'].get('products',{}).get('origin',[]) if p.get('status')=='UPDATE' and p['properties'].get('origin-source',p['source']).lower() in authoritative]
         versions.extend(rs)
         if b:
             autos=[r for r in rs if r['network']==e['network'] and r['code']==b['code'] and r['review_status']=='automatic' and r['update_ms']<b['update_ms']]

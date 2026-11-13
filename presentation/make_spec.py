@@ -27,10 +27,10 @@ def main():
         return series(label,d['median'],color)
     def add(title,charts,caption,source,notes=''):
         slides.append(dict(title=title,charts=charts,caption=caption,source=source,notes=notes))
-    add('33,468 earthquakes across 15 preferred networks',[
+    add(f'{int(n.events.sum()):,} earthquakes across {len(n)} authoritative regional networks',[
       chart('Events by preferred origin network',[series('Events',n.events)],'#,##0'),
       chart('Reported magnitude range',[series('Minimum',n.mag_min),series('Median',n.mag_median,COLORS[1]),series('Maximum',n.mag_max,COLORS[2])],'0.0')],
-      '11 August–10 November 2026 UTC. Worldwide earthquakes, all magnitudes. Magnitude scales differ among providers.', 'network_summary.csv',
+      '11 August–10 November 2026 UTC. U.S. ANSS authoritative regional networks, all magnitudes. Magnitude scales differ among providers.', 'network_summary.csv',
       'The primary grouping is the catalog preferred origin network, an operational proxy for authority. USGS preferences include geographic authority, source and update time. These volumes measure the ComCat cohort, not each network’s entire local catalog.')
     mag=pd.read_csv(OUT/'magnitude_counts.csv').pivot(index='network',columns='mag_bin',values='events').reindex(nets).fillna(0)
     spec=chart('Event composition by magnitude',[series(label,mag.get(label,pd.Series(0,index=nets)),COLORS[i]) for i,label in enumerate(LABELS)],'#,##0')
