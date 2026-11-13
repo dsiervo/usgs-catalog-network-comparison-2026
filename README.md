@@ -24,4 +24,12 @@ No unit tests or checksum/hash verification are used. Acquisition has resumable 
 - [ComCat product versioning and preference](https://earthquake.usgs.gov/data/catalog/products.php)
 - [ComCat overview](https://earthquake.usgs.gov/data/comcat/)
 
-Analysis and final presentation will be added as acquisition completes.
+## Findings and deliverables
+
+- [Research findings](FINDINGS.md): 25,494 events across 12 authoritative regional networks, with 9,754 automatic-to-reviewed pairs.
+- [PowerPoint](presentation/output/usgs_authoritative_networks.pptx): 24 slides with editable charts.
+- [Publication figures](figures/): 16 figures in PDF, SVG and 300-dpi PNG, with captions.
+- [Comparison tables](results/): event metrics, magnitude strata, pick support, uncertainty and coverage.
+- [Frozen source downloads](https://github.com/dsiervo/usgs-catalog-network-comparison-2026/releases/tag/snapshot-2026-11-11).
+
+The source download covers a wider catalog than the final comparison. Final results include only the official ANSS regional-authority roster described in METHODS.md. The local PowerPoint replaces the unfinished cloud draft after presentation-service timeouts.
