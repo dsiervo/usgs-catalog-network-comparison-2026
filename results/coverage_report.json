@@ -1,21 +1,21 @@
 {
-  "catalog_events": 33468,
-  "unique_event_ids": 33468,
-  "history_downloads": 33468,
+  "catalog_events": 25494,
+  "unique_event_ids": 25494,
+  "history_downloads": 25494,
   "missing_history": 0,
-  "reviewed_events": 29554,
+  "reviewed_events": 21580,
   "phase_status_counts": {
-    "ok": 29549,
+    "ok": 21576,
     "no_reviewed_origin": 3914,
-    "no_matching_reviewed_phase_product": 5
+    "no_matching_reviewed_phase_product": 4
   },
-  "origin_versions": 69448,
-  "contributing_networks": 18,
+  "origin_versions": 51619,
+  "contributing_networks": 12,
   "automatic_reviewed_pairs": 9754,
   "same_type_magnitude_pairs": 9262,
-  "cross_network_reviewed_comparisons": 2803,
+  "cross_network_reviewed_comparisons": 27,
   "unresolved_pick_references": 0,
-  "reported_zero_S_events": 2012,
+  "reported_zero_S_events": 190,
   "phase_distance_unknown_P": 0,
   "phase_distance_unknown_S": 0,
   "runtime": {
