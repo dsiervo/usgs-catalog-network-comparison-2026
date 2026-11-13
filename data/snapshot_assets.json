@@ -1,0 +1,87 @@
+[
+  {
+    "asset": "snapshot-ak.tar",
+    "files": 21662,
+    "bytes": 96583680
+  },
+  {
+    "asset": "snapshot-av.tar",
+    "files": 7228,
+    "bytes": 17858560
+  },
+  {
+    "asset": "snapshot-bulk.tar",
+    "files": 326,
+    "bytes": 248770560
+  },
+  {
+    "asset": "snapshot-catalog.tar",
+    "files": 14,
+    "bytes": 2918400
+  },
+  {
+    "asset": "snapshot-ci.tar",
+    "files": 13461,
+    "bytes": 69099520
+  },
+  {
+    "asset": "snapshot-hv.tar",
+    "files": 3742,
+    "bytes": 12052480
+  },
+  {
+    "asset": "snapshot-mb.tar",
+    "files": 897,
+    "bytes": 2344960
+  },
+  {
+    "asset": "snapshot-nc.tar",
+    "files": 13357,
+    "bytes": 33464320
+  },
+  {
+    "asset": "snapshot-nm.tar",
+    "files": 241,
+    "bytes": 686080
+  },
+  {
+    "asset": "snapshot-nn.tar",
+    "files": 870,
+    "bytes": 2365440
+  },
+  {
+    "asset": "snapshot-ok.tar",
+    "files": 1319,
+    "bytes": 5160960
+  },
+  {
+    "asset": "snapshot-pr.tar",
+    "files": 2530,
+    "bytes": 6072320
+  },
+  {
+    "asset": "snapshot-se.tar",
+    "files": 106,
+    "bytes": 276480
+  },
+  {
+    "asset": "snapshot-tx.tar",
+    "files": 7879,
+    "bytes": 40970240
+  },
+  {
+    "asset": "snapshot-us.tar",
+    "files": 16034,
+    "bytes": 69263360
+  },
+  {
+    "asset": "snapshot-uu.tar",
+    "files": 5541,
+    "bytes": 14622720
+  },
+  {
+    "asset": "snapshot-uw.tar",
+    "files": 2659,
+    "bytes": 8529920
+  }
+]
